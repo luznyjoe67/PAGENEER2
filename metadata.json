@@ -1,0 +1,6 @@
+{
+  "name": "WebLokalnie — Strony Internetowe dla Lokalnych Firm",
+  "description": "Nowoczesna, responsywna strona internetowa dla agencji tworzącej serwisy WWW dla małych i lokalnych biznesów.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
