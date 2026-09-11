@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, PhoneCall } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { Sparkles, Menu, X, ArrowRight, Phone, ShieldCheck, Zap } from 'lucide-react';
 
 interface NavbarProps {
-  onOpenQuote: () => void;
+  onSelectPackage?: (packageId: 'start' | 'biznes' | 'dedykowany') => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onSelectPackage }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -19,15 +18,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote }) => {
   }, []);
 
   const navLinks = [
-    { label: 'Oferta', href: '#dla-kogo' },
-    { label: 'Realizacje', href: '#realizacje' },
-    { label: 'Jak to działa', href: '#jak-to-dziala' },
-    { label: 'Dlaczego my', href: '#dlaczego-my' },
+    { label: 'Realizacja makiety', href: '#makieta' },
+    { label: 'Dla kogo', href: '#sektory' },
+    { label: 'Dlaczego my', href: '#przewagi' },
+    { label: 'Proces', href: '#proces' },
     { label: 'Cennik', href: '#cennik' },
-    { label: 'Kontakt', href: '#kontakt' },
+    { label: 'FAQ', href: '#faq' },
   ];
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
     const element = document.querySelector(href);
@@ -37,133 +36,140 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote }) => {
   };
 
   return (
-    <header
-      id="main-navbar"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-[#09090f]/85 backdrop-blur-md border-b border-purple-900/20 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'
-          : 'bg-transparent py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Logo */}
-        <a
-          id="navbar-logo-link"
-          href="#"
-          className="flex items-center gap-2 group cursor-pointer"
-        >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 via-purple-600 to-pink-500 p-[1.5px] shadow-[0_0_15px_rgba(168,85,247,0.35)] group-hover:scale-105 transition-transform duration-300">
-            <div className="w-full h-full bg-[#0d0d15] rounded-[10px] flex items-center justify-center font-bold text-white text-base tracking-tighter">
-              W<span className="text-pink-400">L</span>
-            </div>
+    <>
+      {/* Top micro announcement bar */}
+      <div className="bg-[#161a1e] border-b border-white/5 text-xs py-2 px-4 text-center text-slate-300">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-3">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            <span className="text-slate-200 font-medium">Harmonogram realizacji:</span>
+            <span className="text-[#3b82f6] font-semibold">2 wolne sloty na ten tydzień</span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-white flex items-center">
-            WebLokalnie
-            <span className="w-2 h-2 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 ml-1 inline-block animate-pulse"></span>
-          </span>
-        </a>
-
-        {/* Desktop Navigation Links */}
-        <nav id="desktop-nav" className="hidden md:flex items-center gap-7">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              id={`nav-link-${link.href.replace('#', '')}`}
-              href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href)}
-              className="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200 relative group py-1"
-            >
-              {link.label}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-pink-500 transition-all duration-300 group-hover:w-full rounded-full"></span>
-            </a>
-          ))}
-        </nav>
-
-        {/* Desktop CTA & Quick Phone */}
-        <div className="hidden md:flex items-center gap-4">
+          <span className="hidden sm:inline text-slate-600">•</span>
+          <div className="hidden sm:flex items-center gap-1.5 text-slate-400">
+            <Zap className="w-3.5 h-3.5 text-[#3b82f6]" />
+            <span>Gotowa strona w 5-7 dni bez ukrytych opłat</span>
+          </div>
+          <span className="hidden md:inline text-slate-600">•</span>
           <a
-            id="nav-quick-phone-btn"
-            href="tel:+48732123456"
-            className="flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+            href="tel:+48500123456"
+            className="hidden md:flex items-center gap-1.5 text-[#3b82f6] hover:text-[#34d399] font-medium transition-colors"
           >
-            <PhoneCall className="w-3.5 h-3.5 text-pink-400" />
-            <span>732 123 456</span>
+            <Phone className="w-3.5 h-3.5" />
+            <span>Infolinia: +48 500 123 456</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Main sticky navigation */}
+      <header
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-[#0f172a]/90 backdrop-blur-md border-b border-white/10 shadow-2xl shadow-black/50 py-3'
+            : 'bg-transparent py-4 border-b border-white/5'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* Brand Logo */}
+          <a href="#" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#3b82f6] via-[#2563eb] to-[#047857] p-[1.5px] shadow-lg shadow-[#3b82f6]/20 group-hover:shadow-[#3b82f6]/35 transition-all duration-300">
+              <div className="w-full h-full bg-[#0f172a] rounded-[10px] flex items-center justify-center font-mono font-bold text-lg text-white">
+                <span className="bg-gradient-to-r from-[#3b82f6] to-[#34d399] bg-clip-text text-transparent">P</span>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-slate-200 transition-colors">
+                  Pageneer
+                </span>
+                <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-blue-500/10 text-[#3b82f6] font-semibold border border-[#3b82f6]/30">
+                  Strony dla firm
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400 font-medium tracking-wide">Jasne zasady</p>
+            </div>
           </a>
 
-          <button
-            id="nav-cta-quote-btn"
-            onClick={onOpenQuote}
-            className="group relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 hover:from-violet-500 hover:to-pink-400 shadow-[0_0_20px_rgba(168,85,247,0.35)] hover:shadow-[0_0_30px_rgba(236,72,153,0.5)] transition-all duration-300 cursor-pointer active:scale-95"
-          >
-            <span>Darmowa wycena</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-          </button>
-        </div>
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-1 bg-[#181d22]/85 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-sm">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="text-xs font-medium text-slate-300 hover:text-white px-3 py-1.5 rounded-full hover:bg-white/5 transition-all"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
 
-        {/* Mobile menu button */}
-        <div className="flex md:hidden items-center gap-2">
+          {/* CTA Button Desktop */}
+          <div className="hidden sm:flex items-center gap-3">
+            <a
+              href="#cennik"
+              onClick={(e) => handleNavClick(e, '#cennik')}
+              className="text-xs font-medium text-slate-300 hover:text-white px-3 py-2 transition-colors"
+            >
+              Od 1 190 zł
+            </a>
+            <a
+              href="#wycena"
+              onClick={(e) => handleNavClick(e, '#wycena')}
+              className="group relative inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#3b82f6] via-[#2563eb] to-[#1d4ed8] hover:brightness-110 shadow-lg shadow-[#3b82f6]/25 transition-all active:scale-95"
+            >
+              <span>Wyceń stronę w 15 min</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </a>
+          </div>
+
+          {/* Mobile menu button */}
           <button
-            id="mobile-menu-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:text-white transition-colors focus:outline-none"
-            aria-label="Toggle Menu"
+            className="lg:hidden p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-white"
+            aria-label="Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
-      </div>
 
-      {/* Mobile Drawer */}
-      <AnimatePresence>
+        {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <motion.div
-            id="mobile-drawer"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden bg-[#0c0c14]/98 border-b border-purple-900/30 px-4 pt-3 pb-6 space-y-3 backdrop-blur-xl"
-          >
-            <div className="flex flex-col space-y-2 pt-2">
+          <div className="lg:hidden bg-[#0f172a] border-b border-white/10 px-4 pt-3 pb-6 space-y-3 mt-2 shadow-2xl">
+            <div className="flex flex-col space-y-1">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
-                  id={`mobile-nav-link-${link.href.replace('#', '')}`}
                   href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className="px-4 py-2.5 rounded-xl text-base font-medium text-slate-200 hover:text-white hover:bg-white/5 transition-colors flex items-center justify-between"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="px-3 py-2 rounded-lg text-sm text-slate-200 hover:bg-white/5 font-medium"
                 >
-                  <span>{link.label}</span>
-                  <span className="text-violet-400 text-xs">→</span>
+                  {link.label}
                 </a>
               ))}
             </div>
-
-            <div className="pt-3 border-t border-white/10 flex flex-col gap-3">
+            <div className="pt-2 border-t border-white/10 flex flex-col gap-2">
               <a
-                id="mobile-phone-call-btn"
-                href="tel:+48732123456"
-                className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 text-slate-200 font-medium text-sm border border-white/10"
+                href="#wycena"
+                onClick={(e) => handleNavClick(e, '#wycena')}
+                className="w-full text-center py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-[#3b82f6] to-[#2563eb] shadow-lg shadow-[#3b82f6]/20"
               >
-                <PhoneCall className="w-4 h-4 text-pink-400" />
-                <span>Zadzwoń: +48 732 123 456</span>
+                Wyceń stronę (bez zobowiązań)
               </a>
-
-              <button
-                id="mobile-nav-quote-btn"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenQuote();
-                }}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-white font-semibold text-sm bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 shadow-[0_0_20px_rgba(168,85,247,0.35)]"
+              <a
+                href="tel:+48500123456"
+                className="w-full text-center py-2.5 rounded-xl text-xs font-semibold text-slate-300 bg-white/5 border border-white/10 flex items-center justify-center gap-2"
               >
-                <span>Darmowa wycena w 15 min</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+                <Phone className="w-3.5 h-3.5 text-[#3b82f6]" />
+                <span>Zadzwoń: +48 500 123 456</span>
+              </a>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
-    </header>
+      </header>
+    </>
   );
 };

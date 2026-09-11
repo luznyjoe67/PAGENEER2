@@ -1,63 +1,57 @@
-export interface AudienceCard {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  iconName: 'Utensils' | 'Wrench' | 'Sparkles' | 'ShoppingBag';
-  highlights: string[];
-  badge: string;
-}
+export type SectorId = 'gastronomy' | 'services' | 'beauty' | 'retail';
 
-export interface ShowcaseProject {
-  id: string;
+export type PackageId = 'complete'| 'biznes' | 'dedykowany';
+
+export interface SectorItem {
+  id: SectorId;
   title: string;
-  category: string;
+  badge: string;
+  tagline: string;
   description: string;
-  features: string[];
-  metrics: {
-    label: string;
-    value: string;
-  }[];
-  mockupType: 'restaurant' | 'automotive' | 'beauty';
+  keyFeatures: string[];
+  metrics: string;
+  exampleName: string;
+  iconName: string;
   accentColor: string;
 }
 
-export interface ProcessStep {
-  step: string;
-  title: string;
-  duration: string;
-  description: string;
-  details: string[];
-  icon: 'MessageSquare' | 'Palette' | 'Code' | 'Rocket';
-}
-
-export interface WhyUsItem {
-  id: string;
-  title: string;
-  shortDesc: string;
-  icon: 'Zap' | 'Smartphone' | 'MapPin' | 'ShieldCheck';
-  stat: string;
-  statLabel: string;
-}
-
-export interface PricingPlan {
-  id: string;
+export interface PricingPackage {
+  id: PackageId;
   name: string;
   price: string;
-  period?: string;
-  description: string;
+  oldPrice?: string;
   popular?: boolean;
-  features: string[];
-  notIncluded?: string[];
-  turnaroundTime: string;
+  timeframe: string;
+  targetAudience: string;
+  summary: string;
+  features: {
+    included: boolean;
+    text: string;
+    highlight?: boolean;
+  }[];
   ctaText: string;
 }
 
-export interface ContactFormData {
+export interface ProcessStep {
+  stepNumber: string;
+  title: string;
+  days: string;
+  description: string;
+  deliverables: string[];
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+  category: string;
+}
+
+export interface QuoteFormData {
   name: string;
   email: string;
   phone: string;
-  businessType: string;
-  selectedPlan: string;
-  projectDescription: string;
+  sector: SectorId | 'other';
+  packageChoice: PackageId;
+  notes: string;
+  urgency: 'standard' | 'express';
 }

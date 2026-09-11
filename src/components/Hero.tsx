@@ -1,282 +1,450 @@
 import React, { useState } from 'react';
-import { ArrowRight, Eye, CheckCircle2, Star, Sparkles, MapPin, Phone, ShieldCheck, Gauge } from 'lucide-react';
-import { motion } from 'motion/react';
+import {
+  Zap,
+  Gauge,
+  Clock,
+  Shield,
+  ArrowRight,
+  Sparkles,
+  Smartphone,
+  Monitor,
+  QrCode,
+  CalendarCheck,
+  MapPin,
+  CheckCircle2,
+  Code2,
+  ExternalLink,
+  ChevronRight,
+  Flame,
+  Star,
+} from 'lucide-react';
+import { HERO_BENCHMARKS, SAMPLE_GASTRONOMY_PROJECT } from '../data/content';
 
-interface HeroProps {
-  onOrderQuote: () => void;
-  onViewShowcase: () => void;
-}
+export const Hero: React.FC = () => {
+  const [deviceMode, setDeviceMode] = useState<'desktop' | 'mobile'>('desktop');
+  const [activeMockTab, setActiveMockTab] = useState<'home' | 'menu' | 'code'>('home');
+  const [reservedSuccess, setReservedSuccess] = useState(false);
 
-export const Hero: React.FC<HeroProps> = ({ onOrderQuote, onViewShowcase }) => {
-  const [activeTab, setActiveTab] = useState<'restaurant' | 'mechanic' | 'beauty'>('restaurant');
-
-  const previewTabs = [
-    { id: 'restaurant', label: 'Pizzeria & Bistro', phone: '+48 501 222 333', place: 'Kraków, Rynek', rating: '4.9 ★ (280 opinii)' },
-    { id: 'mechanic', label: 'Auto Serwis 24h', phone: '+48 600 444 888', place: 'Poznań, Dębiec', rating: '5.0 ★ (140 opinii)' },
-    { id: 'beauty', label: 'Studio Kosmetologii', phone: '+48 789 111 222', place: 'Gdańsk, Wrzeszcz', rating: '4.9 ★ (310 opinii)' },
-  ];
-
-  const currentTab = previewTabs.find(t => t.id === activeTab) || previewTabs[0];
+  const scrollToSection = (id: string) => {
+    const el = document.querySelector(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
-    <section id="hero-section" className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-      {/* Background Soft Blobs & Radial Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[850px] h-[500px] bg-gradient-to-tr from-violet-600/20 via-purple-600/15 to-pink-500/20 blur-[130px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute top-1/3 -left-48 w-[400px] h-[400px] bg-violet-700/15 blur-[120px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute top-1/2 -right-48 w-[400px] h-[400px] bg-pink-600/15 blur-[120px] rounded-full pointer-events-none -z-10" />
-
-      {/* Subtle Background Grid */}
-      <div 
-        className="absolute inset-0 bg-[linear-gradient(to_right,#1f1f2e15_1px,transparent_1px),linear-gradient(to_bottom,#1f1f2e15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none -z-10"
-      />
+    <section className="relative pt-8 pb-20 lg:pt-16 lg:pb-32 overflow-hidden bg-grid-pattern">
+      {/* Glow gradient ambient orbs */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#3b82f6]/15 via-[#2563eb]/10 to-emerald-950/20 blur-[130px] -z-10 pointer-events-none rounded-full" />
+      <div className="absolute top-10 right-10 w-96 h-96 bg-[#3b82f6]/10 blur-[140px] -z-10 pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Eyebrow badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.15)] mb-6 backdrop-blur-sm"
-          >
-            <span className="flex h-2 w-2 rounded-full bg-pink-500 animate-ping" />
-            <span className="text-xs sm:text-sm font-medium text-slate-300">
-              Dedykowane strony dla firm lokalnych • Realizacja w <strong className="text-pink-300 font-semibold">5–7 dni</strong>
-            </span>
-          </motion.div>
+        {/* Main Hero Header */}
+        <div className="text-center max-w-4xl mx-auto space-y-6">
+          {/* Top Micro Pill */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#181d22] border border-blue-500/30 text-xs text-slate-300 shadow-md shadow-[#3b82f6]/10 hover:border-[#3b82f6]/40 transition-colors">
+            <span className="flex h-2 w-2 rounded-full bg-[#3b82f6] animate-pulse" />
+            <span className="font-semibold text-white">Gotowe rozwiązania dla biznesu</span>
+            <span className="text-slate-500">•</span>
+            <span className="text-slate-300">Bez abonamentu, stała cena</span>
+          </div>
 
-          {/* Main Headline */}
-          <motion.h1
-            id="hero-main-title"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.12]"
-          >
-            Zbudujemy Ci taką stronę,{' '}
-            <span className="relative whitespace-nowrap">
-              <span className="bg-gradient-to-r from-violet-400 via-purple-300 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(168,85,247,0.4)]">
-                jak ta
-              </span>
-              <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 250 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 9C60 3 190 3 247 9" stroke="url(#paint0_linear)" strokeWidth="3" strokeLinecap="round" />
-                <defs>
-                  <linearGradient id="paint0_linear" x1="3" y1="6" x2="247" y2="6" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#8B5CF6" />
-                    <stop offset="0.5" stopColor="#C084FC" />
-                    <stop offset="1" stopColor="#EC4899" />
-                  </linearGradient>
-                </defs>
-              </svg>
+          {/* Hard Product Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+            Nowoczesne strony w <span className="text-[#3b82f6]">Strony dla firm</span>.
+            <br />
+            <span className="bg-gradient-to-r from-[#3b82f6] via-[#34d399] to-blue-400 bg-clip-text text-transparent">
+              Szybko, bez kompromisów.
             </span>
-          </motion.h1>
+          </h1>
 
           {/* Subtitle */}
-          <motion.p
-            id="hero-subtitle"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
-          >
-            Tworzymy szybkie, nowoczesne strony internetowe dla małych, lokalnych firm — szybko, bez zbędnego żargonu i w przystępnej cenie. Pozyskuj stałych klientów z Twojej okolicy.
-          </motion.p>
+          <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+            Tworzymy superszybkie, gotowe witryny dla lokalnych firm i małych biznesów. 
+            Stała wycena od <strong className="text-white font-semibold">1 190 zł</strong>, 
+            ekspresowa realizacja w <strong className="text-[#3b82f6] font-semibold">5-7 dni</strong> i 100% Twojej własności kodu źródłowego bez miesięcznych haraczy.
+          </p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            id="hero-cta-buttons"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5"
-          >
+          {/* CTA Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <button
-              id="hero-primary-cta"
-              onClick={onOrderQuote}
-              className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 hover:from-violet-500 hover:to-pink-400 shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:shadow-[0_0_40px_rgba(236,72,153,0.6)] transition-all duration-300 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              onClick={() => scrollToSection('#cennik')}
+              className="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold text-white bg-gradient-to-r from-[#3b82f6] via-[#2563eb] to-[#1d4ed8] hover:brightness-110 shadow-xl shadow-[#3b82f6]/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3"
             >
-              <span>Zamów wycenę</span>
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              <span>Wybierz pakiet</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
 
             <button
-              id="hero-secondary-cta"
-              onClick={onViewShowcase}
-              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl text-base font-semibold text-slate-200 bg-[#12121c]/90 hover:bg-[#181826] border border-purple-500/30 hover:border-purple-400/60 shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+              onClick={() => scrollToSection('#makieta')}
+              className="w-full sm:w-auto px-7 py-4 rounded-xl text-base font-semibold text-slate-200 bg-[#181d22] hover:bg-[#20262d] border border-white/10 hover:border-white/20 transition-all flex items-center justify-center gap-2.5 shadow-md"
             >
-              <Eye className="w-4 h-4 text-purple-400" />
+              <Monitor className="w-4 h-4 text-[#3b82f6]" />
               <span>Zobacz realizacje</span>
             </button>
-          </motion.div>
+          </div>
 
-          {/* Quick trust metrics */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-y-2 gap-x-6 text-xs sm:text-sm text-slate-400"
-          >
-            <span className="inline-flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              100% Własność (Zero abonamentu)
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              Google PageSpeed 98-100/100
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              Lokalne SEO i Google Maps
-            </span>
-          </motion.div>
-        </div>
-
-        {/* Interactive Hero Visual Showcase: Interactive Browser Mockup */}
-        <motion.div
-          id="hero-interactive-mockup"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.45 }}
-          className="mt-14 sm:mt-16 max-w-5xl mx-auto relative"
-        >
-          {/* Ambient Glow underneath mockup */}
-          <div className="absolute -inset-1.5 bg-gradient-to-r from-violet-600 to-pink-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-60 transition duration-1000 -z-10" />
-
-          {/* Browser Container */}
-          <div className="rounded-2xl bg-[#0f0f18] border border-purple-500/30 overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] backdrop-blur-xl">
-            {/* Browser Top Bar */}
-            <div className="px-4 py-3 bg-[#141422] border-b border-white/[0.07] flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-                <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                <span className="ml-2 text-xs font-mono text-slate-400 hidden sm:inline-block">
-                  https://twoja-firma-lokalna.pl
-                </span>
-              </div>
-
-              {/* Mockup tabs */}
-              <div className="flex items-center gap-1 bg-[#090910] p-1 rounded-xl border border-white/5 text-xs font-medium">
-                {previewTabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id as any)}
-                    className={`px-3 py-1 rounded-lg transition-all duration-200 cursor-pointer ${
-                      activeTab === tab.id
-                        ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-[0_0_12px_rgba(168,85,247,0.4)]'
-                        : 'text-slate-400 hover:text-slate-200'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Speed Badge */}
-              <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
-                <Gauge className="w-3.5 h-3.5" />
-                <span>PageSpeed: 100/100</span>
-              </div>
+          {/* Micro trust guarantee */}
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 pt-2 text-xs text-slate-400">
+            <div className="flex items-center gap-1.5">
+              <Shield className="w-4 h-4 text-blue-400" />
+              <span>Gwarancja stałej ceny</span>
             </div>
-
-            {/* Browser Body Mockup Content */}
-            <div className="p-6 sm:p-8 bg-gradient-to-b from-[#11111d] to-[#0c0c14] relative">
-              {/* Inner preview card banner */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                <div className="md:col-span-7 space-y-4 text-left">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-violet-500/10 border border-violet-500/25 text-violet-300 text-xs font-semibold">
-                    <Sparkles className="w-3.5 h-3.5 text-pink-400" />
-                    <span>Widok przykładowej strony dla Twojego biznesu</span>
-                  </div>
-
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                    {activeTab === 'restaurant' && 'Najlepsza Pizza w Piecu Opałowym'}
-                    {activeTab === 'mechanic' && 'Profesjonalny Warsztat & Pomoc 24/7'}
-                    {activeTab === 'beauty' && 'Zadbaj o Swoje Piękno & Zdrowie'}
-                  </h3>
-
-                  <p className="text-sm text-slate-300 leading-relaxed">
-                    {activeTab === 'restaurant' && 'Świeże ciasto, włoskie składniki i przytulna atmosfera w sercu miasta. Zamów online lub zarezerwuj stolik na wieczór.'}
-                    {activeTab === 'mechanic' && 'Komputerowa diagnostyka, naprawa zawieszenia, klimatyzacja i geometria. Uczciwa wycena przed rozpoczęciem prac.'}
-                    {activeTab === 'beauty' && 'Nowoczesne zabiegi na twarz i ciało, stylizacja paznokci i masaże relaksacyjne wykonywane przez certyfikowane ekspertki.'}
-                  </p>
-
-                  {/* Micro features on preview */}
-                  <div className="flex flex-wrap items-center gap-3 pt-1">
-                    <div className="flex items-center gap-1.5 text-xs text-slate-300 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">
-                      <Phone className="w-3.5 h-3.5 text-pink-400" />
-                      <span>{currentTab.phone}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 text-xs text-slate-300 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">
-                      <MapPin className="w-3.5 h-3.5 text-violet-400" />
-                      <span>{currentTab.place}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 text-xs text-amber-300 bg-amber-500/10 px-3 py-1.5 rounded-lg border border-amber-500/20">
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                      <span>{currentTab.rating}</span>
-                    </div>
-                  </div>
-
-                  {/* Mock Action Buttons */}
-                  <div className="pt-2 flex flex-wrap gap-3">
-                    <span className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-pink-600 text-white text-xs font-bold shadow-[0_0_15px_rgba(168,85,247,0.4)] inline-flex items-center gap-1.5">
-                      {activeTab === 'restaurant' && 'Zarezerwuj stolik online'}
-                      {activeTab === 'mechanic' && 'Zadzwoń po pomoc natychmiast'}
-                      {activeTab === 'beauty' && 'Umów wizytę w kalendarzu'}
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                    <span className="px-4 py-2.5 rounded-xl bg-white/5 text-slate-300 border border-white/10 text-xs font-medium inline-flex items-center gap-1.5">
-                      {activeTab === 'restaurant' && 'Zobacz Menu & Cennik'}
-                      {activeTab === 'mechanic' && 'Cennik Usług Serwisu'}
-                      {activeTab === 'beauty' && 'Katalog Zabiegów'}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Visual Widget Card on right */}
-                <div className="md:col-span-5 bg-[#090912] p-5 rounded-xl border border-white/10 space-y-3.5 shadow-inner">
-                  <div className="flex items-center justify-between pb-3 border-b border-white/5">
-                    <span className="text-xs font-semibold text-slate-300">Statystyki strony na żywo</span>
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                      Aktywna
-                    </span>
-                  </div>
-
-                  <div className="space-y-2.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-400">Czas reakcji na kliknięcie</span>
-                      <span className="font-mono text-emerald-400 font-bold">0.32 sekundy</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 w-[96%]" />
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs pt-1">
-                      <span className="text-slate-400">Dostosowanie do smartfonów</span>
-                      <span className="font-mono text-pink-400 font-bold">100% Mobile</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-violet-500 to-pink-500 w-[100%]" />
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs pt-1">
-                      <span className="text-slate-400">Pozycja w lokalnym Google</span>
-                      <span className="font-mono text-purple-300 font-bold">Top 3 w okolicy</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 w-[92%]" />
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex items-center gap-2 text-[11px] text-slate-400 border-t border-white/5">
-                    <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Strona z certyfikatem SSL, zgodna z RODO i dyrektywą Omnibus.</span>
-                  </div>
-                </div>
-              </div>
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-4 h-4 text-[#3b82f6]" />
+              <span>Wdrożenie w 5-7 dni</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-blue-400" />
+              <span>0 zł za hosting na zawsze</span>
             </div>
           </div>
-        </motion.div>
+        </div>
+
+        {/* Live-benchmark statistics row */}
+        <div className="mt-12 max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {HERO_BENCHMARKS.map((item, idx) => (
+            <div
+              key={idx}
+              className="relative group p-4 sm:p-5 rounded-2xl bg-[#181d22]/85 border border-white/10 hover:border-blue-500/40 transition-all backdrop-blur-sm"
+            >
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-xs font-mono font-medium text-slate-400 uppercase tracking-wider">
+                  {item.label}
+                </span>
+                {idx === 0 ? (
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                    PERF 100
+                  </span>
+                ) : idx === 1 ? (
+                  <Zap className="w-3.5 h-3.5 text-[#3b82f6]" />
+                ) : idx === 2 ? (
+                  <Clock className="w-3.5 h-3.5 text-blue-400" />
+                ) : (
+                  <Shield className="w-3.5 h-3.5 text-blue-400" />
+                )}
+              </div>
+              <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono">
+                {idx === 0 ? (
+                  <span className="text-blue-400">{item.value}</span>
+                ) : idx === 1 ? (
+                  <span className="text-[#3b82f6]">{item.value}</span>
+                ) : (
+                  item.value
+                )}
+              </div>
+              <p className="text-[11px] text-slate-400 mt-1 leading-tight">
+                {item.sub}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Sample Project Mockup Section */}
+        <div id="makieta" className="mt-16 sm:mt-20 scroll-mt-24">
+          <div className="text-center max-w-3xl mx-auto mb-6">
+            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#3b82f6] px-2.5 py-1 rounded bg-blue-500/10 border border-blue-500/20">
+              Interaktywna makieta wdrożenia
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">
+              Przykładowa realizacja: Sektor Gastronomiczny
+            </h2>
+            <p className="text-sm text-slate-300 mt-1">
+              Zobacz, jak lekki i nowoczesny, dedykowany kod przekłada się na natychmiastowe zamówienia, menu QR i zero opóźnień.
+            </p>
+          </div>
+
+          {/* Browser Chrome Container */}
+          <div className="max-w-5xl mx-auto rounded-2xl bg-[#181d22] border border-white/15 shadow-2xl shadow-black/80 overflow-hidden">
+            {/* Browser Top Navigation Bar */}
+            <div className="px-4 py-3 bg-[#0f172a] border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
+              {/* Window dots */}
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-blue-500/80 inline-block" />
+                <span className="text-xs text-slate-500 font-mono ml-2 hidden sm:inline">pageneer-runtime: 0.35s</span>
+              </div>
+
+              {/* URL address pill */}
+              <div className="flex-1 max-w-md mx-auto hidden md:flex items-center justify-center px-4 py-1 rounded-lg bg-black/40 border border-white/5 text-xs font-mono text-slate-300">
+                <span className="text-blue-400 mr-2">🔒 https://</span>
+                <span className="text-white font-medium">bella-tavola-poznan.pl</span>
+                <span className="text-slate-500 ml-1">/menu-qr</span>
+              </div>
+
+              {/* View Switchers & Speed badge */}
+              <div className="flex items-center gap-2">
+                <div className="flex items-center p-0.5 rounded-lg bg-black/50 border border-white/10 text-xs">
+                  <button
+                    onClick={() => setDeviceMode('desktop')}
+                    className={`px-2.5 py-1 rounded flex items-center gap-1.5 transition-colors ${
+                      deviceMode === 'desktop'
+                        ? 'bg-[#3b82f6] text-white font-bold'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Monitor className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Desktop</span>
+                  </button>
+                  <button
+                    onClick={() => setDeviceMode('mobile')}
+                    className={`px-2.5 py-1 rounded flex items-center gap-1.5 transition-colors ${
+                      deviceMode === 'mobile'
+                        ? 'bg-[#3b82f6] text-white font-bold'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Smartphone className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Mobile</span>
+                  </button>
+                </div>
+
+                {/* Benchmark score pill */}
+                <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono font-bold">
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>100/100 PageSpeed</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Mockup Sub-navigation Tabs */}
+            <div className="flex border-b border-white/10 bg-[#14181c] px-4 py-2 text-xs font-medium gap-2">
+              <button
+                onClick={() => setActiveMockTab('home')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeMockTab === 'home'
+                    ? 'bg-white/10 text-white font-semibold border border-white/15'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <Monitor className="w-3.5 h-3.5 text-[#3b82f6]" />
+                <span>Widok Główny</span>
+              </button>
+              <button
+                onClick={() => setActiveMockTab('menu')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeMockTab === 'menu'
+                    ? 'bg-white/10 text-white font-semibold border border-white/15'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <QrCode className="w-3.5 h-3.5 text-[#3b82f6]" />
+                <span>Cyfrowe Menu QR</span>
+              </button>
+              <button
+                onClick={() => setActiveMockTab('code')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeMockTab === 'code'
+                    ? 'bg-white/10 text-white font-semibold border border-white/15'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <Code2 className="w-3.5 h-3.5 text-blue-400" />
+                <span>Czysty Kod Nowoczesna Strona</span>
+              </button>
+            </div>
+
+            {/* Mockup Canvas Area */}
+            <div className="p-4 sm:p-6 bg-[#020617] flex justify-center min-h-[460px]">
+              <div
+                className={`transition-all duration-300 w-full ${
+                  deviceMode === 'mobile' ? 'max-w-sm border-x border-white/10 shadow-2xl' : 'max-w-4xl'
+                }`}
+              >
+                {/* TAB 1: HOME PAGE PREVIEW */}
+                {activeMockTab === 'home' && (
+                  <div className="bg-[#181d22] rounded-xl border border-white/10 p-5 sm:p-7 space-y-6">
+                    {/* Mock Header */}
+                    <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg sm:text-xl font-black tracking-tight text-white">
+                            {SAMPLE_GASTRONOMY_PROJECT.name}
+                          </span>
+                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                            Otwarte teraz do 23:00
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                          <MapPin className="w-3 h-3 text-[#3b82f6]" />
+                          <span>Poznań, Stary Rynek 14 • 4.9 ★★★★★ (482 opinie Google)</span>
+                        </p>
+                      </div>
+                      <div className="hidden sm:block">
+                        <button
+                          onClick={() => setReservedSuccess(true)}
+                          className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white text-xs font-bold shadow-md hover:brightness-110 transition-all"
+                        >
+                          Zarezerwuj stolik
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Mock Hero Banner */}
+                    <div className="relative rounded-xl p-5 sm:p-7 overflow-hidden bg-gradient-to-br from-[#13261e] via-[#161d1a] to-[#121619] border border-blue-500/25">
+                      <div className="max-w-md space-y-3">
+                        <span className="text-[11px] font-mono text-[#3b82f6] uppercase tracking-wider font-semibold">
+                          Oryginalna receptura z Neapolu
+                        </span>
+                        <h3 className="text-xl sm:text-2xl font-black text-white leading-snug">
+                          {SAMPLE_GASTRONOMY_PROJECT.headline}
+                        </h3>
+                        <p className="text-xs text-slate-300">
+                          Mąka Caputo Tipo 00, dojrzewanie ciasta 48h, piec opalany dębem. 
+                          Zamów z dostawą lub zjedz przy klimatycznym patio.
+                        </p>
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          <button
+                            onClick={() => setActiveMockTab('menu')}
+                            className="px-3.5 py-2 rounded-lg bg-[#3b82f6] text-white font-bold text-xs flex items-center gap-1.5 hover:bg-[#34d399] transition-colors"
+                          >
+                            <QrCode className="w-3.5 h-3.5" />
+                            <span>Zobacz Menu i Ceny</span>
+                          </button>
+                          <button
+                            onClick={() => setReservedSuccess(true)}
+                            className="px-3.5 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/10"
+                          >
+                            Rezerwacja online
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Live interactive features pill row */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {SAMPLE_GASTRONOMY_PROJECT.features.map((feat, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center gap-2.5 p-3 rounded-lg bg-[#0f172a] border border-white/5 text-xs text-slate-300"
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-[#3b82f6] shrink-0" />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Reservation Toast Alert simulation */}
+                    {reservedSuccess && (
+                      <div className="p-3.5 rounded-xl bg-emerald-950/80 border border-blue-500/40 text-emerald-200 text-xs flex items-center justify-between animate-in fade-in">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                          <span>
+                            <strong>Demo formularza:</strong> Rezerwacja stolika działa natychmiastowo i wysyła SMS/e-mail do managera!
+                          </span>
+                        </div>
+                        <button
+                          onClick={() => setReservedSuccess(false)}
+                          className="text-blue-400 hover:text-white font-bold ml-2 underline text-[11px]"
+                        >
+                          Zamknij
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* TAB 2: QR MENU PREVIEW */}
+                {activeMockTab === 'menu' && (
+                  <div className="bg-[#181d22] rounded-xl border border-white/10 p-5 sm:p-6 space-y-4">
+                    <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                      <div>
+                        <h4 className="text-base font-bold text-white flex items-center gap-2">
+                          <QrCode className="w-4 h-4 text-[#3b82f6]" />
+                          <span>Karta dań na żywo (Menu QR)</span>
+                        </h4>
+                        <p className="text-xs text-slate-400">
+                          Skanujesz kod smartfonem – strona otwiera się w 0.28s bez pobierania ciężkich PDF-ów
+                        </p>
+                      </div>
+                      <span className="px-2.5 py-1 rounded bg-blue-500/20 text-[#3b82f6] border border-blue-500/30 text-xs font-mono">
+                        Waga: 18 kB
+                      </span>
+                    </div>
+
+                    <div className="space-y-3">
+                      {SAMPLE_GASTRONOMY_PROJECT.menuPreview.map((item, idx) => (
+                        <div
+                          key={idx}
+                          className="p-3.5 rounded-xl bg-[#0f172a] border border-white/5 hover:border-blue-500/40 transition-colors flex items-start justify-between gap-3"
+                        >
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h5 className="text-sm font-bold text-white">{item.title}</h5>
+                              {idx === 0 && (
+                                <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                                  Bestseller
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-slate-400 mt-0.5">{item.desc}</p>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <span className="text-sm font-extrabold text-[#3b82f6] font-mono">{item.price}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-300 flex items-center justify-between">
+                      <span>🍽️ Chcesz aktualizować ceny lub dodać danie dnia?</span>
+                      <span className="text-[#3b82f6] font-medium">Zrobisz to w 60 sekund</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* TAB 3: CLEAN Nowoczesna Strona CODE INSPECT */}
+                {activeMockTab === 'code' && (
+                  <div className="bg-[#020617] rounded-xl border border-white/10 p-4 font-mono text-xs text-slate-300 overflow-x-auto space-y-2">
+                    <div className="flex items-center justify-between pb-2 border-b border-white/10 text-[11px] text-slate-500">
+                      <span>index.html (nowoczesny, dedykowany kod, 0 wtyczek)</span>
+                      <span className="text-blue-400">Zero podatności • 100/100 Lighthouse</span>
+                    </div>
+                    <pre className="text-slate-300 text-[11px] leading-relaxed">
+{`<section class="bg-[#0f172a] text-white py-16 px-4">
+  <div class="max-w-4xl mx-auto flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-extrabold tracking-tight">
+        Trattoria & Bar Bella Tavola
+      </h1>
+      <p class="text-slate-400 text-sm mt-1">
+        Poznań Stare Miasto • Czas ładowania: 0.35s
+      </p>
+    </div>
+    <!-- Bezpośrednia rezerwacja bez pośredników i 15% prowizji -->
+    <a href="tel:+48618000000" class="bg-gradient-to-r from-[#3b82f6] to-[#2563eb] 
+       px-5 py-2.5 rounded-xl font-bold text-white shadow-lg shadow-[#3b82f6]/20">
+      Zadzwoń i zarezerwuj
+    </a>
+  </div>
+</section>`}
+                    </pre>
+                    <div className="pt-2 border-t border-white/10 flex items-center justify-between text-slate-400 text-[11px]">
+                      <span>✓ Brak bazy MySQL • Brak wtyczek WordPressa</span>
+                      <span className="text-[#3b82f6]">Kompilacja natywna</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Bottom summary bar */}
+            <div className="px-5 py-3 bg-[#0f172a] border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-400" />
+                <span>Przykładowe wdrożenie z Pakietu Biznes Pro (1 990 zł)</span>
+              </div>
+              <button
+                onClick={() => scrollToSection('#cennik')}
+                className="text-[#3b82f6] hover:text-emerald-300 font-semibold flex items-center gap-1"
+              >
+                <span>Zobacz co wchodzi w skład pakietu</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -6,101 +6,84 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { TargetAudience } from './components/TargetAudience';
-import { Showcase } from './components/Showcase';
-import { HowItWorks } from './components/HowItWorks';
-import { WhyUs } from './components/WhyUs';
-import { Pricing } from './components/Pricing';
+import { SectorsSection } from './components/SectorsSection';
+import { WhyUsSection } from './components/WhyUsSection';
+import { ProcessSection } from './components/ProcessSection';
+import { PricingSection } from './components/PricingSection';
+import { FaqSection } from './components/FaqSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { Phone, Sparkles } from 'lucide-react';
+import { SectorId, PackageId } from './types';
+import { Phone, MessageCircle } from 'lucide-react';
 
 export default function App() {
-  const [selectedPlan, setSelectedPlan] = useState<string>('Pakiet Biznes Pro');
-  const [selectedCategory, setSelectedCategory] = useState<string>('Gastronomia');
+  const [selectedPackage, setSelectedPackage] = useState<PackageId>('biznes');
+  const [selectedSector, setSelectedSector] = useState<SectorId | 'other'>('gastronomy');
 
-  const scrollToContact = () => {
-    const contactElement = document.getElementById('kontakt');
-    if (contactElement) {
-      contactElement.scrollIntoView({ behavior: 'smooth' });
-    }
+  const handleSelectPackage = (pkgId: PackageId) => {
+    setSelectedPackage(pkgId);
   };
 
-  const scrollToShowcase = () => {
-    const showcaseElement = document.getElementById('realizacje');
-    if (showcaseElement) {
-      showcaseElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleSelectPlan = (planName: string) => {
-    setSelectedPlan(planName);
-    scrollToContact();
-  };
-
-  const handleSelectCategory = (categoryTitle: string) => {
-    setSelectedCategory(categoryTitle);
-    scrollToContact();
-  };
-
-  const handleSelectProject = (projectTitle: string) => {
-    setSelectedPlan(`Styl jak: ${projectTitle}`);
-    scrollToContact();
+  const handleSelectSector = (secId: SectorId | 'other') => {
+    setSelectedSector(secId);
   };
 
   return (
-    <div className="min-h-screen bg-[#09090f] text-slate-100 selection:bg-purple-500 selection:text-white relative">
+    <div className="min-h-screen bg-[#0f172a] text-[#e2e8f0] flex flex-col selection:bg-[#3b82f6]/30 selection:text-[#3b82f6]">
       {/* Navigation */}
-      <Navbar onOpenQuote={scrollToContact} />
+      <Navbar onSelectPackage={handleSelectPackage} />
 
-      {/* Hero Section */}
-      <Hero
-        onOrderQuote={scrollToContact}
-        onViewShowcase={scrollToShowcase}
-      />
+      {/* Main Content Sections */}
+      <main className="flex-1">
+        {/* Hero with live benchmark stats and gastronomy mockup preview */}
+        <Hero />
 
-      {/* Target Audience ("Dla kogo") */}
-      <TargetAudience onSelectCategory={handleSelectCategory} />
+        {/* Sectors: Dla kogo (4 cards: Gastronomia, Usługi, Uroda, Handel) */}
+        <SectorsSection onSelectSector={handleSelectSector} />
 
-      {/* Showcase ("Realizacje") */}
-      <Showcase onSelectProject={handleSelectProject} />
+        {/* Advantages: Dlaczego Pageneer & comparison with WordPress */}
+        <WhyUsSection />
 
-      {/* Process ("Jak to działa") */}
-      <HowItWorks />
+        {/* Process: 4-step roadmap timeline */}
+        <ProcessSection />
 
-      {/* Advantages ("Dlaczego my") */}
-      <WhyUs />
+        {/* Pricing: 3 transparent packages */}
+        <PricingSection onSelectPackage={handleSelectPackage} />
 
-      {/* Pricing ("Cennik") */}
-      <Pricing onSelectPlan={handleSelectPlan} />
+        {/* FAQ: Objections dismantled */}
+        <FaqSection />
 
-      {/* Contact & Quote Form ("Kontakt") */}
-      <ContactSection
-        initialPlan={selectedPlan}
-        initialCategory={selectedCategory}
-      />
+        {/* Quick Quote & Contact Form */}
+        <ContactSection
+          selectedPackage={selectedPackage}
+          selectedSector={selectedSector}
+          onPackageChange={handleSelectPackage}
+          onSectorChange={handleSelectSector}
+        />
+      </main>
 
       {/* Footer */}
       <Footer />
 
-      {/* Floating Quick Action for Mobile */}
-      <div className="md:hidden fixed bottom-4 left-4 right-4 z-40 flex items-center gap-2">
+      {/* Floating fast contact button on bottom right */}
+      <aside aria-label="Szybki kontakt" className="fixed bottom-5 right-5 z-40 flex flex-col gap-2.5">
         <a
-          href="tel:+48732123456"
-          className="flex-1 py-3 px-4 rounded-xl bg-[#141422]/95 backdrop-blur-md border border-white/10 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-2xl"
+          href="https://wa.me/48500123456"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-12 h-12 rounded-full bg-blue-500 hover:bg-blue-400 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 transition-transform hover:scale-110"
+          title="Napisz na WhatsApp"
         >
-          <Phone className="w-4 h-4 text-pink-400" />
-          <span>Zadzwoń teraz</span>
+          <MessageCircle className="w-6 h-6" />
         </a>
-
-        <button
-          onClick={scrollToContact}
-          className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+        <a
+          href="tel:+48500123456"
+          className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#3b82f6] via-[#2563eb] to-[#1d4ed8] text-white font-bold flex items-center justify-center shadow-lg shadow-[#3b82f6]/25 transition-transform hover:scale-110"
+          title="Zadzwoń teraz: +48 500 123 456"
         >
-          <Sparkles className="w-4 h-4" />
-          <span>Szybka wycena</span>
-        </button>
-      </div>
+          <Phone className="w-5 h-5" />
+        </a>
+      </aside>
     </div>
   );
 }
