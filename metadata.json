@@ -1,6 +1,6 @@
 {
-  "name": "Pageneer | Szybkie Strony dla Twojej firmy",
-  "description": "Nowoczesna agencja internetowa. Superszybkie strony internetowe w nowoczesnej technologii dla firm lokalnych. Stałe ceny, realizacja w 5-7 dni, 100/100 PageSpeed.",
+  "name": "WebLokalnie — Strony Internetowe dla Lokalnych Firm",
+  "description": "Nowoczesna, responsywna strona internetowa  agencji tworzącej serwisy WWW dla małych i lokalnych biznesów.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
